@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Progate</title>
+</head>
+<body>
+  <h1>Mulai menggunakan AJAX</h1>
+
+  <input id="pokemon">
+  <button type="button" onclick="fetchData()">Fetch data</button>
+  <div id="data"></div>
+
+  <script>
+    // function fetchData() {
+    //   const xhttp = new XMLHttpRequest();
+    //   const url = "https://pokeapi.co/api/v2/pokemon?limit=15";
+    //   const httpMethod = "GET";
+    //   xhttp.onload = function() {
+    //     console.log(this.responseText);
+    //     const response = JSON.parse(this.responseText);
+    //     const results = response.results;
+
+    //     let data = '';
+    //     for (i = 0; i < results.length; i++) {
+    //         data = data + `<p>${results[i].name}</p>`;
+    //     }
+    //     document.getElementById("data").innerHTML = data;
+    //   }
+    //   xhttp.open(httpMethod, url);
+    //   xhttp.send();
+    // }
+
+    async function fetchData() {
+        const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=15", {method: "GET"});
+        
+        const json = await response.json();
+        console.log(json);
+        const results = json.results;
+
+        const search = document.getElementById("pokemon").value;
+
+        let data = [];
+        for (i = 0; i < results.length; i++) {
+            if (results[i].name === search) {
+                data = data + `<p>${results[i].name}</p>`;
+            }
+        }
+
+        document.getElementById("data").innerHTML = data;
+    }
+  </script>
+</body>
+</html>
